@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * *" # daily: catches a codkit release that breaks a fresh consumer
+
+jobs:
+  locked:
+    name: build with the locked versions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm build
+
+  latest:
+    name: build with the latest @codkit/* from npm
+    runs-on: ubuntu-latest
+    env:
+      npm_config_minimum_release_age: "0" # a release minutes old is exactly what this job is for
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm up "@codkit/*@latest"
+      - run: pnpm ls --depth 0 | grep codkit
+      - run: pnpm typecheck
+      - run: pnpm build
+      - name: the paid endpoint answers 402 without a payment
+        run: |
+          pnpm start --port 3000 &
+          for i in $(seq 1 30); do curl -s -o /dev/null localhost:3000/ && break; sleep 1; done
+          test "$(curl -s -o /dev/null -w '%{http_code}' localhost:3000/api/paid/price)" = 402
