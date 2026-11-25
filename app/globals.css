@@ -1,0 +1,136 @@
+:root {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  --page: #fafafa;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --radius-lg: 16px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #141415;
+  }
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--page);
+  color: var(--ck-fg);
+}
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  display: grid;
+  gap: 24px;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+header nav {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+header a {
+  color: var(--ck-muted);
+  text-decoration: none;
+}
+header a:hover,
+header a[aria-current="page"] {
+  color: var(--ck-fg);
+}
+h1 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 16px;
+}
+.panel {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  padding: 24px;
+  border: 1px solid var(--ck-border);
+  border-radius: var(--radius-lg);
+  background: var(--ck-bg);
+}
+.panel > button {
+  justify-self: start;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 36px;
+}
+.muted {
+  margin: 0;
+  color: var(--ck-muted);
+  font-size: 0.875rem;
+}
+.field {
+  display: grid;
+  gap: 8px;
+  color: var(--ck-muted);
+  font-size: 0.875rem;
+}
+.field input,
+.field textarea {
+  font: inherit;
+  padding: 8px 12px;
+  border: 1px solid var(--ck-border);
+  border-radius: var(--ck-radius);
+  background: var(--ck-surface);
+  color: var(--ck-fg);
+}
+.field textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+.secondary {
+  font: inherit;
+  min-height: 36px;
+  padding: 0 16px;
+  border: 1px solid var(--ck-border);
+  border-radius: var(--ck-radius);
+  background: var(--ck-surface);
+  color: var(--ck-fg);
+  cursor: pointer;
+}
+.secondary:disabled,
+.ck-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.mono {
+  margin: 0;
+  padding: 12px;
+  border-radius: var(--ck-radius);
+  background: var(--ck-surface);
+  border: 1px solid var(--ck-border);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.steps {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
