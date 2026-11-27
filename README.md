@@ -24,7 +24,7 @@ pnpm check:paid          # in another terminal; settles a 0.001 USDC x402 paymen
 
 Each of these came from using the published packages cold. See the codkit repo's `PROGRESS.md` for what was done about them.
 
-1. **`@codkit/agent-tools` 0.1.0 rejects chain-specific viem clients.** `createPublicClient({ chain: baseSepolia })` doesn't type-check against `evmChain` (Base and OP chains have an extra transaction type). Fixed in the codkit repo (patch changeset); until that is released, `lib/agent.ts` casts the clients `as never`.
+1. **`@codkit/agent-tools` 0.1.0 rejects chain-specific viem clients.** `createPublicClient({ chain: baseSepolia })` doesn't type-check against `evmChain` (Base and OP chains have an extra transaction type). Fixed in 0.1.1, which this app now uses without casts.
 2. **`@codkit/pay` pins `@x402/*` at `~2.28`; the latest is 2.32.** A plain `pnpm add @x402/hono` installs a second copy of x402 next to the one `@codkit/pay` brings. Install `@x402/hono@~2.28.0` and don't add `@x402/core` or `@x402/evm` yourself.
 3. **pnpm's release-age gate hides fresh releases.** A new project resolved `@codkit/mcp` 0.2.2 and `@codkit/ui` 0.1.2 (the days-old 0.3.0 and 0.1.3 were skipped). Pin the version explicitly (pnpm then adds an exclusion).
 4. **pnpm 12 refuses to install when a build script is unapproved** (`esbuild`, pulled in by `tsx`). Run `pnpm approve-builds --all`.

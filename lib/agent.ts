@@ -22,9 +22,8 @@ export function agentWallet() {
   const transport = http(getRpcUrl("base-sepolia"));
   const chain = evmChain({
     chain: "base-sepolia",
-    // `as never` until @codkit/agent-tools > 0.1.0: 0.1.0's client types reject chain-specific viem clients (Base, OP)
-    publicClient: createPublicClient({ chain: baseSepolia, transport }) as never,
-    walletClient: createWalletClient({ account, chain: baseSepolia, transport }) as never,
+    publicClient: createPublicClient({ chain: baseSepolia, transport }),
+    walletClient: createWalletClient({ account, chain: baseSepolia, transport }),
     tokens: { USDC: { address: USDC, decimals: 6 } },
     swap: [uniswapV3()],
   });
